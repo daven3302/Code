@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+int main(void){
+    int times1,times2,cm[5],pm,pn[5],a,b,times3,m[10],again;//宣告說我要用這些變數 
+    srand(time(NULL));                                      //取時間來用於找隨機數 
+    printf("猜數字遊戲(xAxB)\n");                           //遊戲名稱 
+    do{                                                     //用do迴圈設定是否結束後還要玩 
+       times3=8;                                           //只能猜十次 
+       for(times1=0;times1<10;times1++) m[times1]=times1;   // 0~9的題庫 
+       times2=0;                                            //使題庫每用一次少一格的變數 
+       for(times1=4;times1>0;times1--)                      // 開始找隨機數 
+       {
+        a=rand()%(9-times2)+1;                              //幾號題庫 
+        times2++;                                           //使題庫每用一次少一格的式子 
+        cm[times1]=m[a];                                    //將題號中的內容放進隨機數 
+        for(;a<9;a++) m[a]=m[a+1];                         //使題庫中用過的消失 
+        }
+    printf("輸入四個心中想的數字\n");                       //告訴玩家要幹嘛 
+    do{                                                     //用do迴圈讓玩家猜10次 
+    scanf("%d",&pm);                                        //儲存玩家的數 
+    a=b=0;                                                  //初始提示用的xAxB 
+    times3--;                                               //每猜一次少一次機會 
+    pn[4]=(pm%10)/1;                                        //將使用者的數拆開成列陣 
+    pn[3]=(pm%100-pn[4])/10;                                //同上行 
+    pn[2]=(pm%1000-pn[4]-pn[3])/100;                        //同上行 
+    pn[1]=(pm-pn[4]-pn[3]-pn[2])/1000;                      //同上行 
+    for(times1=4;times1>0;times1--)                         //計算題是用的xAxB 
+      for(times2=4;times2>0;times2--)                       //同上行 
+     {  
+      if(cm[times1]==pn[times2])                            //判斷有無相同數 
+      { 
+       if(times1==times2) a++;                              //若同是A?      
+       if(times1!=times2) b++;                              //若同是B?  
+      }
+     }                 
+    if(pm>9999)                                             //判斷玩家的數有無打錯 
+    {
+      printf("打錯ㄌ!!...剩%d次機會\n",times3);             //若錯顯示，但依然減一次機會 
+      a=5;                                                  //使下列判斷不執行 
+    }
+    if(a==4)printf("猜對ㄌ，用ㄌ%d次\n",8-times3);         //猜對恭喜 
+    if(a<4) printf("%dA%dB.......剩%d次機會\n",a,b,times3); //猜錯顯示剩幾次機會
+    if(times3==0)
+    {
+     printf("失敗，答案") ;
+    for(times1=1;times1<5;times1++) printf("%d",cm[times1]);
+    }
+    }while(a!=4&&times3>0);                                 //判斷猜滿十次或猜對之後跳出 
+     puts("再玩嗎?\n1...玩\n0...不玩");                     //要玩下一次媽? 
+     scanf("%d",&again);                                    //儲存玩家決定 
+    }while(again==1);                                       //判斷是否再玩
+}  
