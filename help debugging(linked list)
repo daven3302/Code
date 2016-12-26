@@ -1,0 +1,26 @@
+#include <cstdio>
+typedef struct a
+{
+	int a,b;
+	struct a *next;
+}node;
+int main()
+{
+	node *link,*head;
+	link=new node;
+	head=link;
+	while(scanf("%d %d",&(link->a),&(link->b))!=EOF)
+	{
+		link=link->next;
+		link=new node;
+	}
+	link->next=NULL;
+	link=head;
+	while((link->next)!=NULL)
+	{
+		printf("%d %d\n",(link->a),(link->b));//(link->a)+(link->b));
+		link=link->next;
+	}
+	delete link;
+	return 0;
+}
